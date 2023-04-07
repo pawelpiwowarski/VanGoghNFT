@@ -51,7 +51,7 @@ const Work = (props: { id: string }) => {
         <div className="flex items-center justify-center h-screen">
           <div className="flex flex-col items-center">
             <div className="relative  bg-no-repeat bg-cover">
-              <Image src={`/images_full/${props.id}.png`} alt={data?.title} height={512} width={512} />
+              <Image src={`/images/${props.id}.png`} alt={data?.title} height={512} width={512} />
             </div>
             <div className="text-center">
               <h2 className="text-2xl font-bold mb-2">{data?.title}</h2>
