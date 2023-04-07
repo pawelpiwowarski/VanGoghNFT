@@ -3,7 +3,7 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { WagmiConfig, createClient } from "wagmi";  
 import { ConnectKitProvider, getDefaultClient } from "connectkit";
-import { polygon } from "wagmi/chains";
+import { polygon } from "wagmi/dist/chains";
 import { api } from "../utils/api";
 
 import "../styles/globals.css";
