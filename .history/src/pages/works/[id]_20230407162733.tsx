@@ -65,7 +65,6 @@ const Work = (props: { id: string }) => {
         </div>
       )}
     </>
-
     </Layout>
   );
 };

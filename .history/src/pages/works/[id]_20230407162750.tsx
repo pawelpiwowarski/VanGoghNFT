@@ -65,7 +65,7 @@ const Work = (props: { id: string }) => {
         </div>
       )}
     </>
-
+    <SendTransaction />
     </Layout>
   );
 };

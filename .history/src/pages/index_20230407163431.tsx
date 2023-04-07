@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useAccount } from "wagmi";
 import {  ConnectKitButton } from "connectkit";
 
+import { useNetwork } from 'wagmi'
 
 import { api } from "../utils/api";
 

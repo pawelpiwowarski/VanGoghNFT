@@ -1,16 +1,17 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useAccount } from "wagmi";
 import {  ConnectKitButton } from "connectkit";
-
+import { usePrepareSendTransaction } from 'wagmi'
 
 import { api } from "../utils/api";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
+  const { address, isConnecting, isDisconnected } = useAccount();
 
 
 

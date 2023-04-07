@@ -3,7 +3,6 @@ import { api } from '~/utils/api';
 import Image from 'next/image';
 import { motion } from "framer-motion";
 import Layout from '~/components/Layout';
-import { SendTransaction } from '~/components/SendTransaction';
 const loadingVariants = {
   animate: {
     rotate: [0, 360],
@@ -65,7 +64,6 @@ const Work = (props: { id: string }) => {
         </div>
       )}
     </>
-
     </Layout>
   );
 };
