@@ -4,7 +4,7 @@ The VanGogh Stable Diffusion Collection is an online gallery that showcases 96 d
 
 ## Getting Started
 
-To access the VanGogh Stable Diffusion Collection, simply visit the website at [https://vangogh-stable-diffusion-collection.com/](https://vangogh-stable-diffusion-collection.com/). You can view all 96 images on the website, and claim each picture by clicking on it using a Matic wallet for free.
+To access the VanGogh Stable Diffusion Collection, simply visit the website at [van-gogh-nft.vercel.app](van-gogh-nft.vercel.app). You can view all 96 images on the website, and claim each picture by clicking on it using a Matic wallet for free.
 
 ## Technology Used
 
@@ -16,7 +16,7 @@ The VanGogh Stable Diffusion Collection website is built using the following tec
 
 ## Contributing
 
-If you'd like to contribute to the VanGogh Stable Diffusion Collection website, please feel free to submit a pull request or open an issue on our GitHub repository at [https://github.com/vangogh-stable-diffusion-collection](https://github.com/vangogh-stable-diffusion-collection).
+If you'd like to contribute to the VanGogh Stable Diffusion Collection website, please feel free to submit a pull request or open an issue on our GitHub repository at [https://github.com/pawelpiwowarski/VanGoghNFT](https://github.com/pawelpiwowarski/VanGoghNFT).
 
 ## License
 

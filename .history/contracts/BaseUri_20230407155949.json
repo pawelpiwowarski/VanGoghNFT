@@ -1,9 +1,0 @@
-{
-    "name": "VanGoghStableDiffusion",
-    "description": "VanGogh tokens minted on van-gogh-nft.vercel.app",
-    "image": "https://bafybeibfnjocqdrkotizp7tqmjznuj577skwx7p5anbdjwzf736oay53sa.ipfs.dweb.link/0.png",
-    "external_link": "https://www.van-gogh-nft.vercel.app/",
-    "seller_fee_basis_points": 500,
-    "fee_recipient": "0x46726183c8559F183Cb41b1Ddd756333f14874dB"
-  }
-  
