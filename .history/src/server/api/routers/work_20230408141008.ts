@@ -23,7 +23,7 @@ import {
 
  
       
-      
+
 
 
     return ctx.prisma.token.update({
@@ -40,10 +40,6 @@ import {
     }),
     hasAddressClaimed: publicProcedure.input(z.object({ address: z.string() })).query(({ctx, input }) => {
 
-      // check the host address
-
-      
-      
       return ctx.prisma.token.findFirst({
 
           where: {

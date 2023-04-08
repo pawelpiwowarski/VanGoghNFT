@@ -1,5 +1,3 @@
-
-
 import type { GetServerSidePropsContext } from 'next';
 import { api } from '~/utils/api';
 import Image from 'next/image';
@@ -52,7 +50,7 @@ const Work = (props: { id: string }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      claim.mutate({ id: props.id, address: address as string, contract_address });
+      claim.mutate({ id: props.id, address: address as string, contract_address, transactionHash: ContractData?.hash as string });
     }
   }, [isSuccess]);
 

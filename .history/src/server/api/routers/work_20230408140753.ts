@@ -17,13 +17,11 @@ import {
         });
     }),
 
-    claim: publicProcedure.input(z.object({ address: z.string(), id: z.string(), contract_address: z.string()})).mutation(({ctx, input }) => {
+    claim: publicProcedure.input(z.object({ address: z.string(), id: z.string(), contract_address: z.string(), transactionHash: z.string() })).mutation(({ctx, input }) => {
 
-   // check the transaction hash
-
- 
-      
-      
+    // check if the transaction hash has been used before with wagmi api
+    // if it has, return an error
+    // if it hasn't, continue
 
 
     return ctx.prisma.token.update({
@@ -40,10 +38,6 @@ import {
     }),
     hasAddressClaimed: publicProcedure.input(z.object({ address: z.string() })).query(({ctx, input }) => {
 
-      // check the host address
-
-      
-      
       return ctx.prisma.token.findFirst({
 
           where: {

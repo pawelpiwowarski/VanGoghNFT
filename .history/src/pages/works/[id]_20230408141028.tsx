@@ -1,4 +1,4 @@
-
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import type { GetServerSidePropsContext } from 'next';
 import { api } from '~/utils/api';
