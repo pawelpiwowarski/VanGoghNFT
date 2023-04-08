@@ -99,18 +99,18 @@ const Work = (props: { id: string }) => {
 {data?.claimedBy && data.claimed && (
                 <div className="mt-4">
                   <h2 className="text-xl font-medium mb-2">Claimed by:</h2>
-                  <a href={`https://polygonscan.com/address/${data.claimedBy}`} target="_blank" rel="noreferrer">
+                  <a href={`https://polygonscan.com/address/${data.claimedBy as string}`} target="_blank" rel="noreferrer">
                   <p>{data.claimedBy}</p>
                   </a>
                   {data.claimedAt && data.claimed && (
-                    <p className="text-gray-500">on {new Date(data.claimedAt).toLocaleString()}</p>
+                    <p className="text-gray-500">on {new Date(data.claimedAt as Date).toLocaleString()}</p>
                   )}
                 </div>
               )}
 {data?.OpenSeaLink && data.claimed && (
 
                 <div className="mt-4">
-                  <a href={data?.OpenSeaLink} target='_blank'> 
+                  <a href={data?.OpenSeaLink as string} target='_blank'> 
                   <h2 className="text-xl font-medium mb-2">View on OpenSea:</h2>
                   </a>
                   </div>
