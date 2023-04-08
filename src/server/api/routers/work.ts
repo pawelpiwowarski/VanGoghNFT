@@ -17,12 +17,13 @@ import {
         });
     }),
 
+    getAll: publicProcedure.query(({ctx}) => {
+        return ctx.prisma.token.findMany();
+    }),
+    
+
     claim: publicProcedure.input(z.object({ address: z.string(), id: z.string(), contract_address: z.string()})).mutation(({ctx, input }) => {
-
-   // check the transaction hash
-
- 
-      
+       
       
 
 

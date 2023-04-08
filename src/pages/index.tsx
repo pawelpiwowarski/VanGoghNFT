@@ -1,10 +1,11 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import fs from 'fs';
 import path from 'path';
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Layout  from '~/components/Layout';
+import { api } from '~/utils/api';
+import {FilterMenu} from '~/components/FilterMenu';
 
 const MotionImg = motion.img;
 
@@ -13,81 +14,39 @@ interface Props {
   images: string[];
 }
 
-const ImageModal: React.FC<{ selectedImage: string; setSelectedImage: (imageUrl: string) => void }> = ({
-  selectedImage,
-  setSelectedImage,
-}) => {
-  if (!selectedImage) return null;
 
-  const handleClose = () => {
-    setSelectedImage('');
-    if (typeof document !== 'undefined') {
-      document.body.style.overflow = 'visible';
-    }
-  };
-
-  const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (event.target === event.currentTarget) {
-      handleClose();
-    }
-  };
-
-  return (
-
-    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
-      <div className="absolute top-0 left-0 w-full h-full bg-gray-900 opacity-50" onClick={handleBackgroundClick}></div>
-      <div className="bg-white rounded-lg shadow-lg z-10">
-        <button className="absolute top-0 right-0 m-3 text-gray-700 hover:text-gray-900" onClick={handleClose}>
-          <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
-            <path
-              d="M18.292 5.292a1 1 0 0 0-1.414 0L12 10.586 7.707 6.293a1 1 0 1 0-1.414 1.414L10.586 12l-4.293 4.293a1 1 0 0 0 1.414 1.414L12 13.414l4.293 4.293a1 1 0 0 0 1.414-1.414L13.414 12l4.292-4.292a1 1 0 0 0 0-1.416z"
-              fillRule="evenodd"
-              clipRule="evenodd"
-            ></path>
-          </svg>
-        </button>
-        <div className="p-2 h-96 w-96">
-
-          <img src={`/images/${selectedImage}`} alt={selectedImage} />
-
-
-        </div>
-      </div>
-    </div>
-  );
-};
 const MotionDiv = motion.div;
 
 
 
 const ImageGalleryPage: React.FC<Props> = ({ images }) => {
   const [isClient, setIsClient] = useState(false);
+  const [showClaimed, setShowClaimed] = useState(false);
+  const [showAll, setShowAll] = useState(true);
+
 
   useEffect(() => {
     setIsClient(true);
   }, []);
-  const [selectedImage, setSelectedImage] = useState('');
-  console.log(selectedImage);
+
+  const {data: AllWorks} = api.work.getAll.useQuery()
+
+
+  const claimedIds =showAll? AllWorks?.map((work)=>work.id) :AllWorks?.filter((work) => showClaimed ? work.claimed : !work.claimed).map((work) => work.id);
+
+
   const [page, setPage] = useState(1); // get current page from localStorage or default to 1
 
   const imagesPerPage = 9;
 
-  const handleImageClick = (imageUrl: string) => {
-    setSelectedImage(imageUrl);
-    document.body.style.overflow = 'hidden'; // prevent scrolling
-  };
 
   const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber);
-    // add smooth scroll to top
-
-
-    // use framer motion to animate scroll to top
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
-    // get the MotionDiv element to rerender
+
 
     const motionDiv = document.getElementById('motion-div');
     if (motionDiv) {
@@ -107,17 +66,21 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
 
   const displayedImages = images.slice(startIndex, endIndex);
 
+  const filteredImages = displayedImages.filter((image) => {
+    const id = image.split(".")[0];
+    return claimedIds?.includes(id as string);
+  });
+
   return (
     <Layout>
     <div className="container mx-auto max-w-full">
-    <MotionDiv         id="motion-div"
-    key={`page-${page}`}      initial={{ opacity: 0 }}
-    animate={{ opacity: 1, y: 0, transition: { ease: "easeOut",duration: 1 },
-
-   }
-  }
-    exit={{ opacity: 0, y: -50 }}>
-
+    <MotionDiv
+  id="motion-div"
+  key={`page-${page}`}
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1, y: 0, transition: { ease: "easeOut", duration: 1 } }}
+  exit={{ opacity: 0, y: -50 }}
+>
     <div>
 
       <div className="flex justify-center items-center text-center">
@@ -134,19 +97,23 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
         </div>
       </div>
       <div className="container mx-auto px-5 lg:px-32 sm:flex-col">
+      <div className="flex justify-end pb-3 font-bold text-xl">
+  <FilterMenu showClaimed={showClaimed} setShowClaimed={setShowClaimed} showAll={showAll} setshowAll={setShowAll}/>
+</div>
+
         <div className="-m-1 flex flex-wrap sm:flex-no-wrap md:-m-2">
-          {displayedImages.map((image, index) => (
+          {filteredImages.map((image, index) => (
 
             <div key={index} className="flex w-1/3 flex-wrap">
               <a href={ `/works/${image.split(".")[0]?? "" }`   } rel="preload">
               <div className="w-full p-1 md:p-2">
-                <MotionImg
-                  alt={image}
-                  className="block h-full w-full rounded-lg object-cover object-center"
-                  src={`/images/${image}`}
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.2 }}
-                />
+              <MotionImg
+        alt={image}
+        className="block h-full w-full rounded-lg object-cover object-center"
+        src={`/images/${image}`}
+        whileHover={{ scale: 1.05 }}
+        transition={{ duration: 0.2 }}
+      />
               </div>
               </a>
             </div>
@@ -155,12 +122,13 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
           ))}
         </div>
       </div>
-      <ImageModal selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
+
       <div className="flex justify-center items-center py-4">
         {Array(Math.ceil(images.length / imagesPerPage))
           .fill(0)
           .map((_, i) => (
             <button
+            id="page-button"
             key={i}
             className={`py-2 mx-1 ${
               i + 1 === page ? 'bg-gray-900 text-white' : 'bg-white text-gray-900 hover:bg-gray-200'
