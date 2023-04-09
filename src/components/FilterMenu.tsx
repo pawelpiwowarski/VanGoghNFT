@@ -57,23 +57,8 @@ export const FilterMenu = ({ showClaimed, setShowClaimed, showAll, setshowAll }:
                 </button>
               )}
             </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`border-none  ${showClaimed === true ? 'bg-gray-100 text-gray-900' : ' bg-gray-100 text-gray-700'}
-              block w-full text-left px-4 py-2 text-sm`}
-              onClick={() => {
-                setshowAll(false);
-                setShowClaimed(true)
 
-                
-              
-              }}
-                >
-                  Show Claimed Only
-                </button>
-              )}
-            </Menu.Item>
+    
 
           </div>
         </Menu.Items>
