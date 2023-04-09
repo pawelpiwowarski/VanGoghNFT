@@ -166,7 +166,9 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
           ))}
         </div>
       </div>
-
+{  !showClaimed && !showAll ?<>      <div className="flex justify-center items-center py-4 font-bold text-2xl">
+  <h1>All of the tokens have been claimed  😔</h1>
+ </div></>:
       <div className="flex justify-center items-center py-4">
         {Array(Math.ceil(images.length / imagesPerPage))
           .fill(0)
@@ -190,6 +192,7 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
           
           ))}
       </div>
+}
       
     </div>
 
