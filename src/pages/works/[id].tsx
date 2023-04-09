@@ -52,6 +52,7 @@ const Work = (props: { id: string }) => {
 
   useEffect(() => {
     if (isSuccess) {
+      
       claim.mutate({ id: props.id, address: address as string, contract_address });
     }
   }, [isSuccess]);

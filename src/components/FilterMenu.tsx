@@ -1,6 +1,5 @@
 import { Menu, Transition } from '@headlessui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+
 
 interface FilterMenuProps {
   showClaimed: boolean;

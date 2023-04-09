@@ -23,8 +23,8 @@ import {
     
 
     claim: publicProcedure.input(z.object({ address: z.string(), id: z.string(), contract_address: z.string()})).mutation(({ctx, input }) => {
-       
-      
+     
+    return null
 
 
     return ctx.prisma.token.update({
