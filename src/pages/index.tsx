@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import Layout  from '~/components/Layout';
 import { api } from '~/utils/api';
 import {FilterMenu} from '~/components/FilterMenu';
+import { LoadingAnimation } from '~/components/LoadingAnimation';
 
 const MotionImg = motion.img;
 
@@ -23,11 +24,22 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
   const [isClient, setIsClient] = useState(false);
   const [showClaimed, setShowClaimed] = useState(false);
   const [showAll, setShowAll] = useState(true);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
+
+  
+
+  
 
   useEffect(() => {
     setIsClient(true);
+    
+
+  
   }, []);
+
+
+
 
   const {data: AllWorks} = api.work.getAll.useQuery()
 
@@ -49,8 +61,13 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
 
 
     const motionDiv = document.getElementById('motion-div');
+
+    // check if the div has been rendered
+
+
     if (motionDiv) {
       motionDiv.style.opacity = '0'; // Hide the div
+
       setTimeout(() => {
         motionDiv.style.opacity = '1'; // Show the div and animate it
       }, 100); // Wait a short time to give the window time to scroll to the top
@@ -70,6 +87,26 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
     const id = image.split(".")[0];
     return claimedIds?.includes(id as string);
   });
+
+  useEffect(() => {
+    // check if all images have been loaded
+    const allImagesLoaded = filteredImages.every(() => imagesLoaded);
+    if (allImagesLoaded) {
+      // update the state to indicate that all images have been loaded
+      setImagesLoaded(true);
+    }
+  }, [filteredImages, imagesLoaded]);
+  
+
+  
+
+  if (!imagesLoaded)
+  {
+    return (
+    <LoadingAnimation/>
+    )
+  }
+
 
   return (
     <Layout>
@@ -113,6 +150,11 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
         src={`/images/${image}`}
         whileHover={{ scale: 1.05 }}
         transition={{ duration: 0.2 }}
+        onLoad={() => {
+          // set a flag to indicate that this image has been loaded
+          setImagesLoaded(true);
+        }}
+
       />
               </div>
               </a>

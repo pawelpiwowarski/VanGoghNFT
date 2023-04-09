@@ -1,5 +1,6 @@
 import { Menu, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 interface FilterMenuProps {
   showClaimed: boolean;
@@ -16,7 +17,8 @@ export const FilterMenu = ({ showClaimed, setShowClaimed, showAll, setshowAll }:
       <div>
         <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">
           {showAll? 'Show All' : showClaimed ? 'Show Claimed Only' : 'Show Unclaimed'}
-          <FontAwesomeIcon icon="caret-down" className="ml-2 -mr-1 h-5 w-5" />
+
+
         </Menu.Button>
       </div>
       <Transition
