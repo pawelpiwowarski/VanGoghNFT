@@ -103,7 +103,9 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
   if (!imagesLoaded)
   {
     return (
-    <LoadingAnimation/>
+      <Layout>
+      <LoadingAnimation />;
+      </Layout>
     )
   }
 
