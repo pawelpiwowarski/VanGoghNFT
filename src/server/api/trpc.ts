@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 /**
  * YOU PROBABLY DON'T NEED TO EDIT THIS FILE, UNLESS:
  * 1. You want to modify request context (see Part 1).
@@ -16,12 +18,13 @@
  */
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { type Session } from "next-auth";
-
 import { getServerAuthSession } from "~/server/auth";
 import { prisma } from "~/server/db";
-
+import { siweServer } from "~/utils/siweServer";
+import type { NextSIWESession }  from '/Users/pawelpiwowarski/vangoghnft/node_modules/connectkit-next-siwe/build/configureSIWE.d.ts'
 type CreateContextOptions = {
   session: Session | null;
+  siweSession: NextSIWESession | null;
 };
 
 /**
@@ -37,6 +40,7 @@ type CreateContextOptions = {
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
+    siweSession: opts.siweSession,
     prisma,
   };
 };
@@ -50,15 +54,14 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   const { req, res } = opts;
 
- 
-
-
-
   // Get the session from the server using the getServerSession wrapper function
   const session = await getServerAuthSession({ req, res });
+  const siweSession = await siweServer.getSession(req, res);
+
 
   return createInnerTRPCContext({
-    session,
+    session, 
+    siweSession,
   });
 };
 

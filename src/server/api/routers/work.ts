@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { z } from "zod";
+import { siweServer } from "~/utils/siweServer";
+
 
 import {
     createTRPCRouter,
@@ -23,9 +26,19 @@ import {
     
 
     claim: publicProcedure.input(z.object({ address: z.string(), id: z.string(), contract_address: z.string()})).mutation(({ctx, input }) => {
-     
-    return null
+    
 
+
+
+    
+    if (!ctx.siweSession) {
+        throw new Error("You are not logged in")
+    }
+
+
+    if (ctx.siweSession.address !== input.address) {
+        throw new Error("You are not logged in with the correct address")
+    }
 
     return ctx.prisma.token.update({
         where: {
