@@ -114,9 +114,7 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
     <div>
 
       <div className="flex justify-center items-center text-center">
-        <Head>
-          <title>VanGogh Collection</title>
-        </Head>
+
         <div className="container mx-auto px-5 py-2 lg:px-32 lg:pt-6">
           <h1 className="text-4xl font-bold mb-4">VanGogh Stable Diffusion Collection</h1>
           <p className="text-lg mb-8">

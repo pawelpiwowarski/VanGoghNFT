@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ConnectKitButton } from 'connectkit';
-
+import Head from 'next/head';
 type LayoutProps = {
   children: React.ReactNode
 }
@@ -8,6 +8,9 @@ type LayoutProps = {
 const Layout = (props: LayoutProps) => {
   return (
     <div>
+              <Head>
+          <title>VanGogh Stable Diffusion</title>
+        </Head>
       <nav className="flex items-center justify-between flex-wrap p-6">
         <div className="flex items-center flex-shrink-0 text-2xl font-bold text-black mr-6">
           <Link href="/">
