@@ -21,10 +21,10 @@ import { type Session } from "next-auth";
 import { getServerAuthSession } from "~/server/auth";
 import { prisma } from "~/server/db";
 import { siweServer } from "~/utils/siweServer";
-import type { NextSIWESession }  from '/Users/pawelpiwowarski/vangoghnft/node_modules/connectkit-next-siwe/build/configureSIWE.d.ts'
+
 type CreateContextOptions = {
   session: Session | null;
-  siweSession: NextSIWESession | null;
+  siweSession: any ;
 };
 
 /**
