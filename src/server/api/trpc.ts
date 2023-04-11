@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 
 /**
  * YOU PROBABLY DON'T NEED TO EDIT THIS FILE, UNLESS:
@@ -21,10 +21,10 @@ import { type Session } from "next-auth";
 import { getServerAuthSession } from "~/server/auth";
 import { prisma } from "~/server/db";
 import { siweServer } from "~/utils/siweServer";
-
+import { NextSIWESession } from "~/utils/SiweSessionType";
 type CreateContextOptions = {
   session: Session | null;
-  siweSession: any ;
+  siweSession: NextSIWESession | null ;
 };
 
 /**
