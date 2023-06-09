@@ -21,6 +21,7 @@ import {
     }),
 
     getAll: publicProcedure.query(({ctx}) => {
+
         return ctx.prisma.token.findMany();
     }),
     

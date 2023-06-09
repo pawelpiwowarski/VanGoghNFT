@@ -26,9 +26,6 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
   const [showAll, setShowAll] = useState(true);
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
-
-  
-
   
 
   useEffect(() => {
@@ -41,10 +38,17 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
 
 
 
+  
   const {data: AllWorks} = api.work.getAll.useQuery()
 
 
+
+
+
+
   const claimedIds =showAll? AllWorks?.map((work)=>work.id) :AllWorks?.filter((work) => showClaimed ? work.claimed : !work.claimed).map((work) => work.id);
+
+  
 
 
   const [page, setPage] = useState(1); // get current page from localStorage or default to 1
@@ -99,7 +103,7 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
   
 
 
-
+  
 
   return (
     <Layout>
@@ -124,10 +128,22 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
           </p>
         </div>
       </div>
-      <div className="container mx-auto px-5 lg:px-32 sm:flex-col">
+
+
+{ !AllWorks ? <LoadingAnimation/>: 
+      <div  className="container mx-auto px-5 lg:px-32 sm:flex-col">
+
+
+
       <div className="flex justify-end pb-3 font-bold text-xl">
+
+
+
+    
   <FilterMenu showClaimed={showClaimed} setShowClaimed={setShowClaimed} showAll={showAll} setshowAll={setShowAll}/>
 </div>
+
+
 
         <div className="-m-1 flex flex-wrap sm:flex-no-wrap md:-m-2">
           {filteredImages.map((image, index) => (
@@ -154,7 +170,7 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
 
           ))}
         </div>
-      </div>
+      </div> }
 {  !showClaimed && !showAll ?<>      <div className="flex justify-center items-center py-4 font-bold text-2xl">
   <h1>All of the tokens have been claimed  😔</h1>
  </div></>:
@@ -181,9 +197,13 @@ const ImageGalleryPage: React.FC<Props> = ({ images }) => {
           
           ))}
       </div>
+
+          
+          
 }
       
     </div>
+
 
     </MotionDiv>
 

@@ -21,7 +21,7 @@ import { type Session } from "next-auth";
 import { getServerAuthSession } from "~/server/auth";
 import { prisma } from "~/server/db";
 import { siweServer } from "~/utils/siweServer";
-import { NextSIWESession } from "~/utils/SiweSessionType";
+import type { NextSIWESession } from "~/utils/types/SiweSessionType";
 type CreateContextOptions = {
   session: Session | null;
   siweSession: NextSIWESession | null ;
@@ -126,6 +126,8 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   });
 });
 
+
+
 /**
  * Protected (authenticated) procedure
  *
@@ -135,3 +137,26 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+
+
+
+/**
+ * Protected siwe (authenticated) procedure
+ */
+
+
+const enforceUserIsAuthedSiwe = t.middleware(({ ctx, next }) => {
+  if (!ctx.siweSession || !ctx.siweSession.address) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      siweSession: { ...ctx.siweSession},
+    },
+  });
+}
+
+);
+
+export const protectedSiweProcedure = t.procedure.use(enforceUserIsAuthedSiwe);

@@ -2,7 +2,7 @@ import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { WagmiConfig, createClient } from "wagmi";  
-import { ConnectKitProvider, getDefaultClient,SIWESession } from "connectkit";
+import {  ConnectKitProvider, getDefaultClient, type SIWESession } from "connectkit";
 import { polygon } from "wagmi/chains";
 import { api } from "../utils/api";
 import { siweClient } from "../utils/siweClient";
