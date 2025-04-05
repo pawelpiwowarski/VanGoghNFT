@@ -2,17 +2,19 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["multiSchema"] // 👈 Add this
 }
 
 datasource db {
-    provider     = "mysql"
+    provider     = "postgresql" // "postgresql" | "mysql" | "sqlserver" | "sqlite"
     // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url          = env("DATABASE_URL")
     relationMode = "prisma"
+    schemas      = ["vangoghnft"]
 }
 
 model Token {
@@ -24,6 +26,8 @@ model Token {
     claimedBy   String?
     OpenSeaLink String?
     year        String
+
+    @@schema("vangoghnft")
 }
 
 // Necessary for Next auth
@@ -43,6 +47,7 @@ model Account {
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
+    @@schema("vangoghnft")
 }
 
 model Session {
@@ -51,6 +56,8 @@ model Session {
     userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@schema("vangoghnft")
 }
 
 model User {
@@ -62,6 +69,8 @@ model User {
     accounts      Account[]
     sessions      Session[]
     address       String?   @unique
+
+    @@schema("vangoghnft")
 }
 
 model VerificationToken {
@@ -70,4 +79,5 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+    @@schema("vangoghnft")
 }
